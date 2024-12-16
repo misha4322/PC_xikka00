@@ -81,6 +81,8 @@ export const ProductBasket = () => {
         return "Охлаждение";
       case "storage":
         return "Накопитель (SSD/HDD)";
+      case "motherboard":
+          return "Материнская плата";
       default:
         return category;
     }

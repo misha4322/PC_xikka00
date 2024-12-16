@@ -23,14 +23,19 @@ const sectionIcons = {
 };
 
 export const ConfComputer = () => {
-  const [selectedComponents, setSelectedComponents] = useState({});
+  const [selectedComponents, setSelectedComponents] = useState(() => {
+    try {
+      const savedComponents = localStorage.getItem("selectedComponents");
+      return savedComponents ? JSON.parse(savedComponents) : {};
+    } catch (error) {
+      console.error("Ошибка загрузки данных из localStorage", error);
+      return {};
+    }
+  });
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const saved = localStorage.getItem("selectedComponents");
-    if (saved) setSelectedComponents(JSON.parse(saved));
-  }, []);
-
+  
   useEffect(() => {
     localStorage.setItem("selectedComponents", JSON.stringify(selectedComponents));
   }, [selectedComponents]);
@@ -48,8 +53,9 @@ export const ConfComputer = () => {
   };
 
   const handleAddToBasket = () => {
+  
     const allSelected = Object.keys(componentsData).every((category) => {
-      if (category === "motherboard") return true;
+      if (category === "motherboard") return true; 
       return selectedComponents[category];
     });
 
@@ -58,7 +64,10 @@ export const ConfComputer = () => {
       return;
     }
 
+   
     localStorage.setItem("basket", JSON.stringify(selectedComponents));
+    localStorage.removeItem("selectedComponents"); 
+    setSelectedComponents({}); 
     navigate("/basket");
   };
 
@@ -139,11 +148,9 @@ export const ConfComputer = () => {
         </div>
       )}
 
-      <div className={s.totalPrice}>
-        <p>Итоговая цена: {calculateTotalPrice()} р</p>
-        <button className={s.basket} onClick={handleAddToBasket}>
-          <p className={s.basket_p}>В корзину</p>
-        </button>
+      <div className={s.total}>
+        <h3>Итого: {calculateTotalPrice()} р</h3>
+        <button onClick={handleAddToBasket}>Добавить в корзину</button>
       </div>
     </div>
   );
