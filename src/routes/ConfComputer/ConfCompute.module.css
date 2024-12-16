@@ -1,0 +1,112 @@
+.conf_div {
+    margin: 0px;
+    padding: 0px;
+    background-color: rgba(51, 51, 51, 1);
+    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.proc {
+    margin-top: 5vh;
+    display: flex;
+    max-width: 1477px;
+    border-radius: 35px;
+    background-color: black;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.proc .itemLabel {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    height: 70px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    padding: 10px;
+    transition: none;
+    cursor: pointer;
+}
+
+.proc .itemLabel:first-child {
+    border-top: none;
+}
+
+.proc .itemLabel:last-child {
+    border-bottom: none;
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid #BEBEBE;
+    background-color: transparent;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"]:checked {
+    border: 4px solid #1EFF00;
+    background-color: #1EFF00;
+
+}
+
+
+
+.itemText {
+    color: white;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+
+.price {
+    color: #696969;
+    font-size: 32px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.totalPrice {
+    display: flex;
+     justify-content: space-evenly;
+    margin-top: 30px;
+    padding: 20px;
+    flex-direction: row-reverse;
+    border-radius: 10px;
+}
+
+.basket {
+    background-color: #00ff00;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.basket_p {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.basket:hover {
+    background-color: #008000;
+}

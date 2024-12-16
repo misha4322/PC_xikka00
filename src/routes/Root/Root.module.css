@@ -1,0 +1,55 @@
+.menu {
+    margin: 0; 
+    padding: 0;
+    
+
+    /* background-color: black;  */
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.div {
+    padding: 4px;
+    display: flex; 
+    flex-direction: row;
+    flex-grow: 1; 
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+}
+
+
+
+.qwerty {
+    color: white;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none; 
+    padding: 10px; 
+    font-size: 32px;
+}
+
+.qwerty:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background-color: black; 
+    transition: width 0.5s; 
+}
+
+.qwerty:hover:after {
+    content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px;
+    background-color: white; 
+    transition: width 0.5s;  
+}

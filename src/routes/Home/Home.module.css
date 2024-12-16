@@ -1,0 +1,66 @@
+
+.sliderContainer {
+    padding: 20px;
+    
+  
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .swiper {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: black;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .build {
+    text-align: center;
+  }
+  
+  .build ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .build li {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .buttons {
+    margin-top: 10px;
+  }
+  
+  .buyButton,
+  .editButton {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .buyButton {
+    border: 2px, solid, #C0FF01;
+    background-color: rgba(0, 0, 0, 0);
+    
+  }
+  
+  .editButton {
+    background-color: #007bff;
+  }
+  
