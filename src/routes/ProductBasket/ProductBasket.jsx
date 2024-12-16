@@ -25,7 +25,7 @@ export const ProductBasket = () => {
     if (savedBasket) {
       const items = JSON.parse(savedBasket);
       setBasketItems(items);
-      setTotalPrice(calculateTotalPrice(items)); // Calculate price when items are loaded
+      setTotalPrice(calculateTotalPrice(items)); 
     }
   }, []);
 
