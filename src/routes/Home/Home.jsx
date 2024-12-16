@@ -40,6 +40,56 @@ export const Home = () => {
     },
   ];
 
+  
+  const buildsUnder100k = [
+    {
+      name: "До 100к",
+      config: {
+        processor: componentsData.processor[0].name, // Intel Core i3-13100
+        video_card: componentsData.video_card[0].name, // GIGABYTE GeForce GTX 1660 SUPER
+        memory: componentsData.memory[0].name, // 8GB HyperX Fury DDR4
+        storage: componentsData.storage[0].name, // Seagate BarraCuda 2TB HDD
+        case: componentsData.case[0].name, // Cooler Master MasterBox Q300L
+        power_supply: componentsData.power_supply[0].name, // Cooler Master MWE Gold 650W
+        cooling: componentsData.cooling[0].name, // be quiet! Pure Rock 2
+        motherboard: componentsData.motherboard[0].name, // ASUS TUF Gaming B450-PLUS
+      },
+    },
+  ];
+
+  const buildsUnder200k = [
+    {
+      name: "до 200к",
+      config: {
+        processor: componentsData.processor[2].name, // Intel Core i5-13600K
+        video_card: componentsData.video_card[4].name, // ZOTAC GeForce RTX 3060 Twin Edge OC
+        memory: componentsData.memory[2].name, // 16GB Corsair Vengeance RGB Pro DDR4
+        storage: componentsData.storage[2].name, // Western Digital Blue 500GB SSD
+        case: componentsData.case[2].name, // NZXT H7 Elite
+        power_supply: componentsData.power_supply[2].name, // Corsair RM750x
+        cooling: componentsData.cooling[2].name, // Cooler Master Hyper 212 Black Edition
+        motherboard: componentsData.motherboard[2].name, // Gigabyte Z490 AORUS Elite AC
+      },
+    },
+  ];
+
+  const buildsOver300k = [
+    {
+      name: "от 300к",
+      config: {
+        processor: componentsData.processor[6].name, // Intel Core i9-13900K
+        video_card: componentsData.video_card[8].name, // MSI GeForce RTX 4090 SUPRIM
+        memory: componentsData.memory[6].name, // 64GB Crucial Ballistix RGB DDR4
+        storage: componentsData.storage[6].name, // Samsung 980 PRO 1TB NVMe SSD
+        case: componentsData.case[5].name, // Corsair 5000D AIRFLOW
+        power_supply: componentsData.power_supply[6].name, // Corsair RM1000x
+        cooling: componentsData.cooling[6].name, // Noctua NH-D15
+        motherboard: componentsData.motherboard[6].name, // MSI MAG Z690 TOMAHAWK
+      },
+    },
+  ];
+
+
   const handleBuy = (config) => {
     const savedBasket = localStorage.getItem("basket");
     const basketItems = savedBasket ? JSON.parse(savedBasket) : {};
@@ -52,8 +102,41 @@ export const Home = () => {
     navigate("/basket");
   };
 
+ 
+  const renderComponents = (config) => {
+    return (
+      <div className={s.componentsList}>
+        <div className={s.componentItem}>
+          <span>Процессор:</span> {config.processor}
+        </div>
+        <div className={s.componentItem}>
+          <span>Видеокарта:</span> {config.video_card}
+        </div>
+        <div className={s.componentItem}>
+          <span>Оперативная память:</span> {config.memory}
+        </div>
+        <div className={s.componentItem}>
+          <span>Накопитель:</span> {config.storage}
+        </div>
+        <div className={s.componentItem}>
+          <span>Корпус:</span> {config.case}
+        </div>
+        <div className={s.componentItem}>
+          <span>Блок питания:</span> {config.power_supply}
+        </div>
+        <div className={s.componentItem}>
+          <span>Охлаждение:</span> {config.cooling}
+        </div>
+        <div className={s.componentItem}>
+          <span>Материнская плата:</span> {config.motherboard}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={s.container}>
+ 
       <div className={s.sliderContainer}>
         <Swiper
           navigation
@@ -62,6 +145,7 @@ export const Home = () => {
           modules={[Navigation, Pagination, Autoplay]}
           className={s.swiper}
         >
+        
           {builds.map((build, index) => (
             <SwiperSlide key={index} className={s.slide}>
               <div className={s.build}>
@@ -80,23 +164,38 @@ export const Home = () => {
         </Swiper>
       </div>
 
+
       <div className={s.priceCategory}>
         <h2>Ценовая категория</h2>
         <div className={s.priceRange}>
           <div className={s.priceCategoryItem}>
-            <h3>До 100к</h3>
-            <p>=до 100 000 рублей.</p>
-          
+            {buildsUnder100k.map((build, index) => (
+              <div key={index} className={s.build}>
+                <h4>{build.name}</h4>
+                {renderComponents(build.config)}
+                <button onClick={() => handleBuy(build.config)}>Купить ПК</button>
+              </div>
+            ))}
           </div>
+
           <div className={s.priceCategoryItem}>
-            <h3>До 200к</h3>
-            <p> до 200 000 рублей.</p>
-           
+            {buildsUnder200k.map((build, index) => (
+              <div key={index} className={s.build}>
+                <h4>{build.name}</h4>
+                {renderComponents(build.config)}
+                <button onClick={() => handleBuy(build.config)}>Купить ПК</button>
+              </div>
+            ))}
           </div>
+
           <div className={s.priceCategoryItem}>
-            <h3>От 300к</h3>
-            <p>от 300 000 рублей.</p>
-        
+            {buildsOver300k.map((build, index) => (
+              <div key={index} className={s.build}>
+                <h4>{build.name}</h4>
+                {renderComponents(build.config)}
+                <button onClick={() => handleBuy(build.config)}>Купить ПК</button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

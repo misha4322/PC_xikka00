@@ -23,29 +23,26 @@ const sectionIcons = {
 };
 
 export const ConfComputer = () => {
-  const [selectedComponents, setSelectedComponents] = useState(() => {
-    try {
-      const savedComponents = localStorage.getItem("selectedComponents");
-      return savedComponents ? JSON.parse(savedComponents) : {};
-    } catch (error) {
-      console.error("Ошибка загрузки данных из localStorage", error);
-      return {};
-    }
-  });
-
+  const [selectedComponents, setSelectedComponents] = useState({});
   const navigate = useNavigate();
 
-  
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedComponents");
+    if (saved) setSelectedComponents(JSON.parse(saved));
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("selectedComponents", JSON.stringify(selectedComponents));
   }, [selectedComponents]);
 
   const handleSelect = (category, item) => {
     setSelectedComponents((prev) => {
-      const newSelection = { ...prev, [category]: item.name };
+      const newSelection = { ...prev, [category]: { name: item.name, price: item.price } };
 
       if (category === "processor") {
-        newSelection.processorCompatibility = item.brand;
+        newSelection.processorCompatibility = item.socket;
+      } else if (category === "motherboard") {
+        newSelection.motherboardCompatibility = item.socket;
       }
 
       return newSelection;
@@ -53,104 +50,87 @@ export const ConfComputer = () => {
   };
 
   const handleAddToBasket = () => {
-  
-    const allSelected = Object.keys(componentsData).every((category) => {
-      if (category === "motherboard") return true; 
-      return selectedComponents[category];
-    });
+    const allSelected = Object.keys(componentsData).every((category) => selectedComponents[category]);
 
     if (!allSelected) {
       alert("Пожалуйста, выберите все компоненты.");
       return;
     }
 
-   
     localStorage.setItem("basket", JSON.stringify(selectedComponents));
-    localStorage.removeItem("selectedComponents"); 
-    setSelectedComponents({}); 
     navigate("/basket");
   };
 
   const calculateTotalPrice = () => {
-    return Object.entries(selectedComponents).reduce((total, [category, selectedItem]) => {
-      const item = componentsData[category]?.find((component) => component.name === selectedItem);
-      return total + (item?.price || 0);
+    return Object.values(selectedComponents).reduce((total, selectedItem) => {
+      return total + (selectedItem?.price || 0);
     }, 0);
   };
 
-  const filteredMotherboards = selectedComponents.processorCompatibility
-    ? componentsData.motherboard.filter(
-        (mboard) => mboard.compatibleWith === selectedComponents.processorCompatibility
-      )
-    : componentsData.motherboard;
+  const filteredItems = (category) => {
+    if (category === "processor") {
+      return selectedComponents.motherboardCompatibility
+        ? componentsData.processor.filter(
+            (processor) => processor.socket === selectedComponents.motherboardCompatibility
+          )
+        : componentsData.processor;
+    } else if (category === "motherboard") {
+      return selectedComponents.processorCompatibility
+        ? componentsData.motherboard.filter(
+            (motherboard) => motherboard.socket === selectedComponents.processorCompatibility
+          )
+        : componentsData.motherboard;
+    }
+    return componentsData[category];
+  };
 
   return (
     <div className={s.conf_div}>
-      {Object.entries(componentsData).map(([category, items]) => {
-        if (category === "motherboard") return null;
-
-        return (
-          <div key={category} className={s.proc}>
-            <div className={s.div_konfi}>
-              <img src={sectionIcons[category]} alt={category} />
-              <h2>
-                {category === "processor"
-                  ? "Процессор"
-                  : category === "video_card"
-                  ? "Видеокарта"
-                  : category === "memory"
-                  ? "Оперативная память"
-                  : category === "case"
-                  ? "Корпус"
-                  : category === "power_supply"
-                  ? "Блок питания"
-                  : category === "cooling"
-                  ? "Охлаждение"
-                  : category === "storage"
-                  ? "Накопитель (SSD/HDD)"
-                  : category}
-              </h2>
-            </div>
-            {items.map((item) => (
-              <label key={item.name} className={s.itemLabel}>
-                <input
-                  type="radio"
-                  name={category}
-                  checked={selectedComponents[category] === item.name}
-                  onChange={() => handleSelect(category, item)}
-                />
-                <span className={s.itemText}>{item.name}</span>
-                <span className={s.price}>{item.price} р</span>
-              </label>
-            ))}
-          </div>
-        );
-      })}
-
-      {filteredMotherboards.length > 0 && (
-        <div className={s.proc}>
+      {Object.entries(componentsData).map(([category, items]) => (
+        <div key={category} className={s.proc}>
           <div className={s.div_konfi}>
-            <img src={sectionIcons["motherboard"]} alt="motherboard" />
-            <h2>Материнская плата</h2>
+            <img src={sectionIcons[category]} alt={category} />
+            <h2>
+              {category === "processor"
+                ? "Процессор"
+                : category === "video_card"
+                ? "Видеокарта"
+                : category === "memory"
+                ? "Оперативная память"
+                : category === "case"
+                ? "Корпус"
+                : category === "power_supply"
+                ? "Блок питания"
+                : category === "cooling"
+                ? "Охлаждение"
+                : category === "storage"
+                ? "Накопитель (SSD/HDD)"
+                : category === "motherboard"
+                ? "Материнская плата"
+                : category}
+            </h2>
           </div>
-          {filteredMotherboards.map((item) => (
+          {filteredItems(category).map((item) => (
             <label key={item.name} className={s.itemLabel}>
               <input
                 type="radio"
-                name="motherboard"
-                checked={selectedComponents.motherboard === item.name}
-                onChange={() => handleSelect("motherboard", item)}
+                name={category}
+                checked={selectedComponents[category]?.name === item.name}
+                onChange={() => handleSelect(category, item)}
               />
-              <span className={s.itemText}>{item.name}</span>
-              <span className={s.price}>{item.price} р</span>
+              <span className={s.itemText}>
+                {item.name} — {item.price} р
+              </span>
             </label>
           ))}
         </div>
-      )}
+      ))}
 
-      <div className={s.total}>
-        <h3>Итого: {calculateTotalPrice()} р</h3>
-        <button onClick={handleAddToBasket}>Добавить в корзину</button>
+      <div className={s.totalPrice}>
+        <p>Итоговая цена: {calculateTotalPrice()} р</p>
+        <button className={s.basket} onClick={handleAddToBasket}>
+          <p className={s.basket_p}>В корзину</p>
+        </button>
       </div>
     </div>
   );

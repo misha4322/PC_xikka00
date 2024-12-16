@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./ProductBasket.module.css";
 import trash from "../../assets/icons8-мусорка-100 1.svg";
+
 import componentsData from "../../componets/componentsData";
 
 export const ProductBasket = () => {
@@ -9,20 +10,18 @@ export const ProductBasket = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [orderSuccess, setOrderSuccess] = useState(false);
-  const [orderSuccessInfo, setOrderSuccessInfo] = useState({ phoneNumber: "", totalPrice: 0 }); // Состояние для информации о заказе
+  const [orderSuccessInfo, setOrderSuccessInfo] = useState({ phoneNumber: "", totalPrice: 0 });
   const navigate = useNavigate();
 
-  // Функция для вычисления итоговой цены
   const calculateTotalPrice = (items) => {
     let total = 0;
-    Object.entries(items).forEach(([category, itemName]) => {
-      const component = componentsData[category]?.find((item) => item.name === itemName);
+    Object.entries(items).forEach(([category, item]) => {
+      const component = componentsData[category]?.find((comp) => comp.name === item.name);
       if (component) total += component.price;
     });
     return total;
   };
 
-  
   useEffect(() => {
     const savedBasket = localStorage.getItem("basket");
     if (savedBasket) {
@@ -32,15 +31,9 @@ export const ProductBasket = () => {
     }
   }, []);
 
-
   const handleOrder = () => {
     if (phoneNumber && phoneNumber.length === 11) {
-   
-      setOrderSuccessInfo({
-        phoneNumber: phoneNumber,
-        totalPrice: totalPrice,
-      });
-
+      setOrderSuccessInfo({ phoneNumber, totalPrice });
       setOrderSuccess(true);
       setBasketItems({});
       setTotalPrice(0);
@@ -50,13 +43,11 @@ export const ProductBasket = () => {
     }
   };
 
-  
   const handleClearBasket = () => {
     setBasketItems({});
     setTotalPrice(0);
     localStorage.removeItem("basket");
   };
-
 
   const handleClose = () => {
     setOrderSuccess(false);
@@ -67,24 +58,15 @@ export const ProductBasket = () => {
 
   const getCategoryName = (category) => {
     switch (category) {
-      case "processor":
-        return "Процессор";
-      case "video_card":
-        return "Видеокарта";
-      case "memory":
-        return "Оперативная память";
-      case "case":
-        return "Корпус";
-      case "power_supply":
-        return "Блок питания";
-      case "cooling":
-        return "Охлаждение";
-      case "storage":
-        return "Накопитель (SSD/HDD)";
-      case "motherboard":
-          return "Материнская плата";
-      default:
-        return category;
+      case "processor": return "Процессор";
+      case "video_card": return "Видеокарта";
+      case "memory": return "Оперативная память";
+      case "case": return "Корпус";
+      case "power_supply": return "Блок питания";
+      case "cooling": return "Охлаждение";
+      case "storage": return "Накопитель (SSD/HDD)";
+      case "motherboard": return "Материнская плата";
+      default: return category;
     }
   };
 
@@ -98,12 +80,12 @@ export const ProductBasket = () => {
               <p>Корзина пуста</p>
             ) : (
               <ul className={s.spisok}>
-                {Object.entries(basketItems).map(([category, itemName]) => {
-                  const component = componentsData[category]?.find((item) => item.name === itemName);
+                {Object.entries(basketItems).map(([category, item]) => {
+                  const component = componentsData[category]?.find((comp) => comp.name === item.name);
                   return (
                     <li key={category} className={s.component}>
-                      <strong>{getCategoryName(category)}:</strong> {itemName}
-                      <span> - {component?.price} р</span>
+                      <strong>{getCategoryName(category)}:</strong> {item.name}
+                      <span> - {component?.price} р</span> {/* Отображение цены */}
                     </li>
                   );
                 })}
