@@ -8,11 +8,11 @@ export const Root = () => {
     <div className={s.menu}>
 
       <nav className={s.div}>
-      < NavLink className={({ isActive, isPending }) => isActive ? s.active : isPending ? s.loading : s.btn} to={'home'}>
+      < NavLink className={({ isActive, isPending }) => isActive ? s.active : isPending ? s.loading : s.btn} to={'/'}>
           <div className={s.qwerty}> 
           <img src={logo} alt="" /></div>
         </NavLink>
-        <NavLink className={({ isActive, isPending }) => isActive ? s.active : isPending ? s.loading : s.btn} to={'home'}>
+        <NavLink className={({ isActive, isPending }) => isActive ? s.active : isPending ? s.loading : s.btn} to={'/'}>
           <div className={s.qwerty}> Главная</div>
         </NavLink>
         <NavLink className={({ isActive, isPending }) => isActive ? s.active : isPending ? s.loading : s.btn} to={'gather'}>

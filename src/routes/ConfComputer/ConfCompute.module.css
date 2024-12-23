@@ -29,7 +29,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
     height: 70px;
-    border-top: 2px solid white;
+    width: 1084px;
     border-bottom: 2px solid white;
     padding: 10px;
     transition: none;
@@ -77,11 +77,8 @@ input[type="radio"]:checked {
 }
 
 
-.price {
-    color: #696969;
-    font-size: 32px;
-    margin-left: auto;
-    flex-shrink: 0;
+.itemLabel {
+    display: flex;
 }
 
 .totalPrice {
@@ -91,27 +88,48 @@ input[type="radio"]:checked {
     padding: 20px;
     flex-direction: row-reverse;
     border-radius: 10px;
+    align-items: center
 }
 
 .basket {
-    background-color: #00ff00;
+    background-color: transparent;
+    width: 446px;
+    height: 94px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    border:  2px solid #C0FF01; 
+    border-radius: 40px;
     cursor: pointer;
 }
 
 .basket_p {
-    color: white;
+    color: #C0FF01;
     font-size: 18px;
     font-weight: bold;
 }
 
-.basket:hover {
-    background-color: #008000;
-}
+
 .disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-  
+.div_konfi{
+    display: flex;
+    align-items: center
+}
+.price_itog{
+    font-size: 36px;
+}
+.selectedComponents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    
+}
+
+.price2_2{
+    
+    font-size: 20px;
+    color: white;
+ 
+}

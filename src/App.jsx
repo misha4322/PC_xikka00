@@ -13,7 +13,7 @@ let router = createBrowserRouter([
     errorElement: <ErrorPage404 />,
     children: [
       {
-        path: '/home',
+        path: '/',
         element: <Home />,
       }, 
       
