@@ -85,7 +85,7 @@ export const ProductBasket = () => {
                   return (
                     <li key={category} className={s.component}>
                       <strong>{getCategoryName(category)}:</strong> {item.name}
-                      <span> - {component?.price} р</span> {/* Отображение цены */}
+                      <span> - {component?.price} р</span> 
                     </li>
                   );
                 })}
@@ -99,7 +99,7 @@ export const ProductBasket = () => {
                 inputMode="numeric"
                 placeholder="Введите номер телефона"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))} // Убираем все символы, кроме цифр
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))} 
                 maxLength={11}
               />
               <button

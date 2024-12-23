@@ -28,8 +28,11 @@ export const ConfComputer = () => {
 
   useEffect(() => {
     const saved = localStorage.getItem("selectedComponents");
-    if (saved) setSelectedComponents(JSON.parse(saved));
+    if (saved) {
+      setSelectedComponents(JSON.parse(saved));
+    }
   }, []);
+  
 
   useEffect(() => {
     localStorage.setItem("selectedComponents", JSON.stringify(selectedComponents));
