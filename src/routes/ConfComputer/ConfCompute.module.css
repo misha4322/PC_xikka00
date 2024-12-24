@@ -6,12 +6,14 @@
     display: flex;
     flex-wrap: wrap;
     align-content: space-around;
+    
 }
 
 .proc {
     margin-top: 5vh;
     display: flex;
     max-width: 1477px;
+    align-items: stretch;
     border-radius: 35px;
     background-color: black;
     align-items: flex-start;
@@ -29,7 +31,8 @@
     justify-content: space-between;
     margin-bottom: 10px;
     height: 70px;
-    width: 1084px;
+    max-width: 1084px;
+   
     border-bottom: 2px solid white;
     padding: 10px;
     transition: none;
@@ -138,4 +141,11 @@ input[type="radio"]:checked {
 }
 .itemText{
     font-size: 35px;
+    display: flex;
+}
+.div_konfigurati{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+ 
 }

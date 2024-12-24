@@ -1,4 +1,4 @@
-// src/features/componentsSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const componentsSlice = createSlice({

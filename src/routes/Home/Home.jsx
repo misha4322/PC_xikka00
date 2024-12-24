@@ -8,7 +8,9 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import componentsData from "../../componets/componentsData";
 import s from "./Home.module.css";
 import { useDispatch } from "react-redux";
-import { setSelectedComponents } from "../../features/componentsSlice"; 
+import { setSelectedComponents } from "../../features/componentsSlice";
+import cubeDark from "../../assets/dark_cube.png";
+import cubeWhite from "../../assets/white_cube.png";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -26,10 +28,12 @@ export const Home = () => {
     motherboard: "Материнская плата",
   };
 
-  // Исходные сборки
+
   const builds = [
     {
-      name: "white dark",
+      name: "cube dark ",
+      slogan: "Встань на темную  сторону силы",
+      img_corpus: cubeDark,
       config: {
         processor: componentsData.processor[3].name,
         video_card: componentsData.video_card[0].name,
@@ -38,29 +42,33 @@ export const Home = () => {
         case: componentsData.case[0].name,
         power_supply: componentsData.power_supply[0].name,
         cooling: componentsData.cooling[0].name,
-        motherboard: componentsData.motherboard[2].name,
+        motherboard: componentsData.motherboard[3].name,
       },
     },
     {
       name: "white cube",
+      slogan: "Встань на белую сторону силы",
+      img_corpus: cubeWhite,
       config: {
-        processor: componentsData.processor[0].name,
-        video_card: componentsData.video_card[2].name,
-        memory: componentsData.memory[1].name,
-        storage: componentsData.storage[1].name,
-        case: componentsData.case[1].name,
-        power_supply: componentsData.power_supply[1].name,
-        cooling: componentsData.cooling[1].name,
-        motherboard: componentsData.motherboard[0].name,
+        processor: componentsData.processor[3].name,
+        video_card: componentsData.video_card[8].name,
+        memory: componentsData.memory[6].name,
+        storage: componentsData.storage[6].name,
+        case: componentsData.case[5].name,
+        power_supply: componentsData.power_supply[6].name,
+        cooling: componentsData.cooling[6].name,
+        motherboard: componentsData.motherboard[6].name,
       },
     },
   ];
 
- 
+
   const buildsByPrice = {
     under100k: [
       {
         name: "До 100к",
+        img_corpus: cubeWhite,
+
         config: {
           processor: componentsData.processor[0].name,
           video_card: componentsData.video_card[0].name,
@@ -69,13 +77,14 @@ export const Home = () => {
           case: componentsData.case[0].name,
           power_supply: componentsData.power_supply[0].name,
           cooling: componentsData.cooling[0].name,
-          motherboard: componentsData.motherboard[0].name,
+          motherboard: componentsData.motherboard[3].name,
         },
       },
     ],
     under200k: [
       {
         name: "До 200к",
+        img_corpus: cubeWhite,
         config: {
           processor: componentsData.processor[2].name,
           video_card: componentsData.video_card[4].name,
@@ -84,15 +93,16 @@ export const Home = () => {
           case: componentsData.case[2].name,
           power_supply: componentsData.power_supply[2].name,
           cooling: componentsData.cooling[2].name,
-          motherboard: componentsData.motherboard[2].name,
+          motherboard: componentsData.motherboard[3].name,
         },
       },
     ],
     over300k: [
       {
         name: "от 300к",
+        img_corpus: cubeWhite,
         config: {
-          processor: componentsData.processor[6].name,
+          processor: componentsData.processor[3].name,
           video_card: componentsData.video_card[8].name,
           memory: componentsData.memory[6].name,
           storage: componentsData.storage[6].name,
@@ -117,7 +127,7 @@ export const Home = () => {
 
 
 
-  
+
   const handleBuy = (config) => {
     const savedBasket = localStorage.getItem("basket");
     const basketItems = savedBasket ? JSON.parse(savedBasket) : {};
@@ -142,8 +152,8 @@ export const Home = () => {
       return acc;
     }, {});
 
-    dispatch(setSelectedComponents(selectedItems)); 
-    navigate("/gather"); 
+    dispatch(setSelectedComponents(selectedItems));
+    navigate("/gather");
   };
 
 
@@ -151,27 +161,34 @@ export const Home = () => {
     <div className={s.componentsList}>
       {Object.entries(config).map(([key, value], index) => (
         <div key={index} className={s.componentItem}>
-          <span>{categoryLabels[key] || key}:</span> {value} 
+          <span>{categoryLabels[key] || key}:</span> {value}
         </div>
       ))}
     </div>
   );
 
- 
+
   const renderBuildsByPrice = (builds) =>
     builds.map((build, index) => {
-      const totalPrice = calculateTotalPrice(build.config); 
+      const totalPrice = calculateTotalPrice(build.config);
       return (
         <div key={index} className={s.build}>
-          <h4>{build.name}</h4>
+        <div className={s.div_opozone}>
+          <p className={s.valuable_h4}>{build.name}</p>
           {renderComponents(build.config)}
-          <div className={s.totalPrice}>Итоговая стоимость: {totalPrice} ₽</div> 
-          <button onClick={() => handleBuy(build.config)} className={s.buyButton}>
-            Купить ПК
-          </button>
-          <button onClick={() => handleEdit(build.config)} className={s.editButton}>
-            Изменить
-          </button>
+          
+          <div className={s.div_knopka}>
+            <button onClick={() => handleBuy(build.config)} className={s.buyButton_categories}>
+              Купить ПК
+            </button>
+            <button onClick={() => handleEdit(build.config)} className={s.editButton}>
+              Изменить
+            </button>
+            <div className={s.totalPrice}>Итоговая стоимость: {totalPrice} ₽</div>
+          </div>
+          </div>
+
+
         </div>
       );
     });
@@ -182,21 +199,25 @@ export const Home = () => {
         <Swiper
           navigation
           pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
+          autoplay={{ delay: 4000 }}
           modules={[Navigation, Pagination, Autoplay]}
           className={s.swiper}
         >
           {builds.map((build, index) => {
-            const totalPrice = calculateTotalPrice(build.config); 
+
             return (
               <SwiperSlide key={index} className={s.slide}>
-                <div className={s.build}>
-                  <h2>{build.name}</h2>
-                  {renderComponents(build.config)}
-                  <div className={s.totalPrice}>{totalPrice} ₽</div>
-                  <button onClick={() => handleBuy(build.config)} className={s.buyButton}>
-                    Купить ПК
-                  </button>
+                <div className={s.build_slider}>
+                  <div className={s.contaner_info}>
+                    <p className={s.name_swiper}>{build.name}</p>
+                    <p className={s.slogan_p}>{build.slogan}</p>
+
+
+                    <button onClick={() => handleBuy(build.config)} className={s.buyButton}>
+                      Купить ПК
+                    </button>
+                  </div>
+                  <img src={build.img_corpus} alt={build.name} className={s.buildImage} />
                 </div>
               </SwiperSlide>
             );
@@ -208,15 +229,15 @@ export const Home = () => {
         <h2 className={s.priceCategoryh2}>Ценовые категории</h2>
         <div className={s.priceRange}>
           <div className={s.priceCategoryItem}>
-            
+
             {renderBuildsByPrice(buildsByPrice.under100k)}
           </div>
           <div className={s.priceCategoryItem}>
-           
+
             {renderBuildsByPrice(buildsByPrice.under200k)}
           </div>
           <div className={s.priceCategoryItem}>
-           
+
             {renderBuildsByPrice(buildsByPrice.over300k)}
           </div>
         </div>

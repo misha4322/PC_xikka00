@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./ProductBasket.module.css";
 import trash from "../../assets/icons8-мусорка-100 1.svg";
-
+import fractal from "../../assets/Fractal-Design.png"
 import componentsData from "../../componets/componentsData";
 
 export const ProductBasket = () => {
@@ -51,7 +51,7 @@ export const ProductBasket = () => {
 
   const handleClose = () => {
     setOrderSuccess(false);
-    navigate("/home");
+    navigate("/");
   };
 
   const isBasketEmpty = Object.keys(basketItems).length === 0;
@@ -72,12 +72,13 @@ export const ProductBasket = () => {
 
   return (
     <div className={s.basketContainer}>
-      <div className={s.contener21}>
-        {!orderSuccess ? (
-          <>
-            <h2>Корзина</h2>
+
+      {!orderSuccess ? (
+        <>
+
+          <div className={s.div_basket}>
             {isBasketEmpty ? (
-              <p>Корзина пуста</p>
+              <p className={s.trash_zero}>Корзина пуста</p>
             ) : (
               <ul className={s.spisok}>
                 {Object.entries(basketItems).map(([category, item]) => {
@@ -85,48 +86,62 @@ export const ProductBasket = () => {
                   return (
                     <li key={category} className={s.component}>
                       <strong>{getCategoryName(category)}:</strong> {item.name}
-                      <span> - {component?.price} р</span> 
+
                     </li>
                   );
                 })}
               </ul>
             )}
-            <h3 className={s.itogo}>Итоговая цена: {totalPrice} р</h3>
+            <div>
+              <img src={fractal} alt="" />
+              <h3 className={s.itogo}>{totalPrice} р</h3>
 
-            <div className={s.inputContainer}>
-              <input
-                type="tel"
-                inputMode="numeric"
-                placeholder="Введите номер телефона"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))} 
-                maxLength={11}
-              />
-              <button
-                onClick={handleOrder}
-                className={s.orderButton}
-                disabled={isBasketEmpty || phoneNumber.length !== 11}
-              >
-                Заказать
+              <div className={s.inputContainer}>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="Введите номер телефона"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
+                  maxLength={11}
+                  pattern="[0-9]*"
+                  mask="+7 (___) ___-__-__"
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                <button
+                  onClick={handleOrder}
+                  className={s.orderButton}
+                  disabled={isBasketEmpty || phoneNumber.length !== 11}
+                >
+                  Заказать
+                </button>
+              </div>
+
+              <button onClick={handleClearBasket} className={s.clearButton}>
+                <img src={trash} alt="Очистить корзину" />
               </button>
             </div>
 
-            <button onClick={handleClearBasket} className={s.clearButton}>
-              <img src={trash} alt="Очистить корзину" />
-            </button>
-          </>
-        ) : (
-          <div className={s.orderSuccess}>
-            <h2>Спасибо за ваш заказ!</h2>
-            <p>Ваш заказ успешно оформлен и передан на обработку.</p>
-            <p>Номер телефона: {orderSuccessInfo.phoneNumber}</p>
-            <p>Сумма заказа: {orderSuccessInfo.totalPrice} рублей</p>
-            <button onClick={handleClose} className={s.closeButton}>
-              Закрыть
-            </button>
           </div>
-        )}
-      </div>
+
+        </>
+      ) : (
+        <div className={s.orderSuccess}>
+          <h2>Спасибо за ваш заказ!</h2>
+          <p>Ваш заказ успешно оформлен и передан на обработку.</p>
+
+          <p>Мы позвоним по этому номеру для потверждение заказа: {orderSuccessInfo.phoneNumber}</p>
+          <p>Сумма заказа: {orderSuccessInfo.totalPrice} рублей</p>
+          <button onClick={handleClose} className={s.closeButton}>
+            Закрыть
+          </button>
+        </div>
+      )}
     </div>
+
   );
 };

@@ -8,29 +8,47 @@
     cursor: not-allowed;
   }
   .basketContainer{
+    margin: 0px;
+    padding: 0px;
     background-color: rgba(51, 51, 51, 1);
-    margin: 0;
-  }
 
-.contener21{
+    display: flex;
+    
+    align-content: space-around;
+    
+  justify-content: space-around;
+    
+}
 
+.div_basket{
+  justify-content: space-between;
   background-color:black;
   border-radius: 35px;
   max-width: 1477px;
   height: 800px;
+  margin:10vh;
+  display: flex;
+align-items: center
+  
+ 
 }
+
 .itogo{
   color: white;
+  font-size: 36px;
 }
 .spisok {
   list-style-type: none; 
-  padding: 0; 
+  padding-left: 5vh; 
+  padding-right: 20vh;
   margin: 0;
 }
 
 .component {
   padding: 10px; 
   position: relative; 
+  font-size: 32px;
+  max-width: 622px;
 }
 
 .component:not(:last-child)::after {
@@ -41,5 +59,12 @@
   position: absolute; 
   left: 0; 
   right: 0;
-  bottom: 0; 
+  bottom: 0;
+   max-width: 622px; 
+}
+
+.trash_zero{
+  font-size: 64px;
+  width: 1400px;
+  text-align: center;
 }
