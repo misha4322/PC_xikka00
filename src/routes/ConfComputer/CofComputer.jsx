@@ -103,7 +103,7 @@ export const ConfComputer = () => {
       ))}
 
       <div className={s.selectedComponents}>
-        <h3>Выбранные комплектующие:</h3>
+        <h3 className={s.h3_set}>Выбранные комплектующие:</h3>
         {Object.entries(selectedComponents).map(([key, value]) => (
           <div key={key}>
             <span className={s.price2_2}>{categoryLabels[key] || key}: {value.name} - {value.price} ₽</span>

@@ -133,3 +133,9 @@ input[type="radio"]:checked {
     color: white;
  
 }
+.h3_set{
+    color: white;
+}
+.itemText{
+    font-size: 35px;
+}
