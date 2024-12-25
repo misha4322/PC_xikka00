@@ -13,6 +13,7 @@ import hard from "../../assets/harddisk 1.svg";
 import cooler from "../../assets/cooler 1.svg";
 import { setSelectedComponents } from "../../features/componentsSlice";
 
+// Иконки для разных категорий
 const sectionIcons = {
   processor: proc,
   video_card: vidokarta,
@@ -24,6 +25,7 @@ const sectionIcons = {
   motherboard: matplata,
 };
 
+// Названия категорий
 const categoryLabels = {
   processor: "Процессор",
   video_card: "Видеокарта",
@@ -34,40 +36,20 @@ const categoryLabels = {
   storage: "Жесткий диск",
   motherboard: "Материнская плата",
 };
+
 export const ConfComputer = () => {
   const dispatch = useDispatch();
   const selectedComponents = useSelector((state) => state.components.selectedComponents);
   const navigate = useNavigate();
+
+  // Стейт для отображения сообщений об ошибке
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Проверка, выбраны ли все компоненты
   const isConfigurationComplete = () => {
     return Object.keys(componentsData).every(
       (category) => selectedComponents[category]
     );
-  };
-
-  // Функция для отправки уведомления через браузер
-  const showBrowserNotification = (message) => {
-    if (!("Notification" in window)) {
-      alert("Ваш браузер не поддерживает уведомления."); // Запасной вариант
-      return;
-    }
-
-    if (Notification.permission === "granted") {
-      new Notification("Конфигурация ПК", {
-        body: message,
-
-      });
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          new Notification("Конфигурация ПК", {
-            body: message,
-            icon: "/path-to-your-icon.png",
-          });
-        }
-      });
-    }
   };
 
   // Функция для обработки выбора компонента
@@ -78,6 +60,7 @@ export const ConfComputer = () => {
         [category]: item,
       })
     );
+    setErrorMessage(""); // Сбрасываем сообщение об ошибке при изменении выбора
   };
 
   // Функция для фильтрации материнских плат по сокету
@@ -86,20 +69,22 @@ export const ConfComputer = () => {
     return motherboards.filter((mb) => mb.socket === processor.socket);
   };
 
-
+  // Обработчик для добавления конфигурации в корзину
   const handleAddToBasket = () => {
     if (!isConfigurationComplete()) {
-      showBrowserNotification("Пожалуйста, завершите сборку конфигурации.");
+      // Если конфигурация не завершена, показываем ошибку в интерфейсе
+      setErrorMessage("Пожалуйста, завершите сборку конфигурации.");
       return;
     }
 
+    // Сохранение выбранных комплектующих в корзину
     const basketItems = JSON.parse(localStorage.getItem("basket")) || {};
     Object.entries(selectedComponents).forEach(([key, value]) => {
       basketItems[key] = value;
     });
     localStorage.setItem("basket", JSON.stringify(basketItems));
 
-    showBrowserNotification("Конфигурация успешно добавлена в корзину!");
+    // Переход на страницу корзины
     navigate("/basket");
   };
 
@@ -127,7 +112,6 @@ export const ConfComputer = () => {
             </div>
             {filteredItems.map((item) => (
               <label key={item.name} className={s.itemLabel}>
-
                 <div className={s.div_konfigurati}>
                   <input
                     type="radio"
@@ -138,12 +122,10 @@ export const ConfComputer = () => {
                   <span className={s.itemText}>
                     {item.name}
                   </span>
-               
                 </div>
-                <span className={s.itemText}>
-                    {item.price} р
-                  </span>
-
+                <span className={s.price_konf}>
+                  {item.price} р
+                </span>
               </label>
             ))}
           </div>
@@ -161,11 +143,18 @@ export const ConfComputer = () => {
         ))}
       </div>
 
+      {errorMessage && (
+        <div className={s.errorMessage}>
+          <p>{errorMessage}</p>
+        </div>
+      )}
+
       <div className={s.totalPrice}>
         <p className={s.price_itog}>Итоговая цена: {calculateTotalPrice()} р</p>
         <button
           className={s.basket}
           onClick={handleAddToBasket}
+          disabled={!isConfigurationComplete()} // Блокируем кнопку, если не все компоненты выбраны
         >
           <p className={s.basket_p}>В корзину</p>
         </button>

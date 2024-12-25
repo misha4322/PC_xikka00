@@ -13,10 +13,11 @@
     margin-top: 5vh;
     display: flex;
     max-width: 1477px;
+    width: 100%;
     align-items: stretch;
     border-radius: 35px;
     background-color: black;
-    align-items: flex-start;
+
     flex-direction: column;
     padding: 20px;
     margin-bottom: 20px;
@@ -31,7 +32,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
     height: 70px;
-    max-width: 1084px;
+    
    
     border-bottom: 2px solid white;
     padding: 10px;
@@ -149,3 +150,15 @@ input[type="radio"]:checked {
     flex-direction: row;
  
 }
+.price_konf{
+    display: flex;
+    font-size: 32px;
+    color: rgba(105, 105, 105, 1);
+
+}
+.errorMessage {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }

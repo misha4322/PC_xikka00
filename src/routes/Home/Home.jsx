@@ -11,6 +11,9 @@ import { useDispatch } from "react-redux";
 import { setSelectedComponents } from "../../features/componentsSlice";
 import cubeDark from "../../assets/dark_cube.png";
 import cubeWhite from "../../assets/white_cube.png";
+import Deepcool from "../../assets/deepcool.png"
+import fractal from "../../assets/fraaaactol.png"
+import Lianli from "../../assets/lianli.png"
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -67,7 +70,7 @@ export const Home = () => {
     under100k: [
       {
         name: "До 100к",
-        img_corpus: cubeWhite,
+        img_corpus: Deepcool,
 
         config: {
           processor: componentsData.processor[0].name,
@@ -84,7 +87,7 @@ export const Home = () => {
     under200k: [
       {
         name: "До 200к",
-        img_corpus: cubeWhite,
+        img_corpus: fractal,
         config: {
           processor: componentsData.processor[2].name,
           video_card: componentsData.video_card[4].name,
@@ -100,7 +103,7 @@ export const Home = () => {
     over300k: [
       {
         name: "от 300к",
-        img_corpus: cubeWhite,
+        img_corpus: Lianli,
         config: {
           processor: componentsData.processor[3].name,
           video_card: componentsData.video_card[8].name,
@@ -174,7 +177,9 @@ export const Home = () => {
       return (
         <div key={index} className={s.build}>
         <div className={s.div_opozone}>
+         
           <p className={s.valuable_h4}>{build.name}</p>
+          <img src={build.img_corpus} alt={build.name} className={s.buildImage} />
           {renderComponents(build.config)}
           
           <div className={s.div_knopka}>
