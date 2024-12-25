@@ -1,25 +1,15 @@
-.menu {
-    margin: 0; 
-    padding: 0;
-    
-
-    /* background-color: black;  */
-    display: flex;
-    flex-direction: column;
-    
-}
-
-.div {
-    padding: 4px;
-    display: flex; 
-    flex-direction: row;
-    flex-grow: 1; 
-    justify-content: space-around;
-    align-items: center;
+.container {
     background-color: black;
 }
 
+.navDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
 
+    margin: 0 auto;
+}
 
 .qwerty {
     color: white;

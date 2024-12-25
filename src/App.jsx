@@ -6,6 +6,7 @@ import { ConfComputer } from './routes/ConfComputer/CofComputer';
 import { ProductBasket } from './routes/ProductBasket/ProductBasket.jsx'
 
 
+
 let router = createBrowserRouter([
   {
     path: '/',
@@ -15,8 +16,8 @@ let router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-      }, 
-      
+      },
+
       {
         path: '/gather',
         element: <ConfComputer />,
@@ -26,9 +27,10 @@ let router = createBrowserRouter([
         path: '/basket',
         element: <ProductBasket />,
       },
- 
+
     ]
-  }
+  },
+  
 ])
 
 function App() {

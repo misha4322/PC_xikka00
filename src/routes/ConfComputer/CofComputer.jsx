@@ -42,13 +42,10 @@ export const ConfComputer = () => {
   const selectedComponents = useSelector((state) => state.components.selectedComponents);
   const navigate = useNavigate();
 
-  // Стейт для отображения сообщений об ошибке
-  const [errorMessage, setErrorMessage] = useState("");
-
   // Проверка, выбраны ли все компоненты
   const isConfigurationComplete = () => {
     return Object.keys(componentsData).every(
-      (category) => selectedComponents[category]
+      (category) => selectedComponents[category] && selectedComponents[category].name
     );
   };
 
@@ -60,7 +57,6 @@ export const ConfComputer = () => {
         [category]: item,
       })
     );
-    setErrorMessage(""); // Сбрасываем сообщение об ошибке при изменении выбора
   };
 
   // Функция для фильтрации материнских плат по сокету
@@ -69,23 +65,22 @@ export const ConfComputer = () => {
     return motherboards.filter((mb) => mb.socket === processor.socket);
   };
 
-  // Обработчик для добавления конфигурации в корзину
+  // Функция для проверки конфигурации перед добавлением в корзину
   const handleAddToBasket = () => {
-    if (!isConfigurationComplete()) {
-      // Если конфигурация не завершена, показываем ошибку в интерфейсе
-      setErrorMessage("Пожалуйста, завершите сборку конфигурации.");
-      return;
+    if (isConfigurationComplete()) {
+      // Сохранение выбранных комплектующих в корзину
+      const basketItems = JSON.parse(localStorage.getItem("basket")) || {};
+      Object.entries(selectedComponents).forEach(([key, value]) => {
+        basketItems[key] = value;
+      });
+      localStorage.setItem("basket", JSON.stringify(basketItems));
+
+      // Переход на страницу корзины
+      navigate("/basket");
+    } else {
+      // Если не все компоненты выбраны, показываем alert
+      alert("Пожалуйста, выберите все комплектующие для завершения сборки!");
     }
-
-    // Сохранение выбранных комплектующих в корзину
-    const basketItems = JSON.parse(localStorage.getItem("basket")) || {};
-    Object.entries(selectedComponents).forEach(([key, value]) => {
-      basketItems[key] = value;
-    });
-    localStorage.setItem("basket", JSON.stringify(basketItems));
-
-    // Переход на страницу корзины
-    navigate("/basket");
   };
 
   // Функция для вычисления итоговой цены
@@ -143,20 +138,13 @@ export const ConfComputer = () => {
         ))}
       </div>
 
-      {errorMessage && (
-        <div className={s.errorMessage}>
-          <p>{errorMessage}</p>
-        </div>
-      )}
-
       <div className={s.totalPrice}>
         <p className={s.price_itog}>Итоговая цена: {calculateTotalPrice()} р</p>
         <button
           className={s.basket}
           onClick={handleAddToBasket}
-          disabled={!isConfigurationComplete()} // Блокируем кнопку, если не все компоненты выбраны
         >
-          <p className={s.basket_p}>В корзину</p>
+          В корзину
         </button>
       </div>
     </div>

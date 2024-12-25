@@ -1,20 +1,57 @@
-.sliderContainer {
-  padding: 20px;
- 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .title {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.swiper {
-  width: 80%;
-  margin: auto;
+.slide {
+  margin: 165px 30px 0 0;
+  max-height: 697px;
+  background-color: black;
+  border-radius: 40px;
 }
+
+.containerSlide {
+  display: flex;
+  justify-content: space-between;
+  width: 1220px;
+  margin: 71px auto;
+}
+
+.textSlide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.textSlide span {
+  font-size: 40px;
+  font-weight: 400;
+  color: rgba(192, 255, 1, 1);
+}
+
+.textSlide h3 {
+  margin: 64px 0 118px;
+  font-size: 64px;
+  width: 607px;
+  font-weight: 400;
+}
+
+.imgSlide {
+  width: 564px;
+  height: 564px;
+}
+
+.btnSlide {
+  width: 446px;
+  height: 94px;
+  border: 2px solid rgba(192, 255, 1, 1);
+  border-radius: 40px;
+  color: rgba(192, 255, 1, 1);
+  font-size: 40px;
+  background-color: inherit;
+  cursor: pointer;
+}
+
 
 .contaner_info {
   display: flex;
@@ -24,19 +61,9 @@
   justify-content: normal;
 
   align-items: flex-start
-
-
 }
 
-.slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: black;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
+
 
 .slogan_p {
   font-size: 64px;
@@ -48,9 +75,10 @@
 .build {
   text-align: center;
 
-  
+
 }
-.build_slider{
+
+.build_slider {
   display: flex;
   flex-direction: row;
   justify-content: space-around
@@ -70,7 +98,7 @@
   margin-top: 10px;
 }
 
-.buyButton,
+/* .buyButton,
 .editButton {
   margin: 5px;
   padding: 10px 15px;
@@ -79,7 +107,7 @@
   cursor: pointer;
   color: white;
   font-size: 14px;
-}
+} */
 
 .buyButton {
   background-color: transparent;
@@ -91,17 +119,12 @@
   cursor: pointer;
   color: #C0FF01;
   font-size: 40px;
-
-
 }
 
-.editButton {
-  background-color: #797979;
-}
 
 .container {
-  background-color: rgba(51, 51, 51, 1);
-  ;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .priceCategoryh2 {
@@ -115,21 +138,30 @@
 }
 
 .componentItem {
+  width: 441px;
+}
+
+.containerText {
+  width: 404px;
+  margin: 15px auto;
   font-size: 20px;
+}
+
+.line {
+  margin-top: 13px;
+  background-color: white;
+  width: 100%;
+  height: 1px;
 }
 
 .priceCategoryItem {
   color: white;
 }
 
-.name_swiper {
-  color: #C0FF01;
-  font-size: 40px;
-}
-
 .valuable_h4 {
   font-size: 36px;
   margin: 0;
+  padding-top: 15px;
 
 }
 
@@ -140,37 +172,8 @@
 }
 
 .priceCategoryItem {
- background-color: black;
- border-radius: 20px  ;
-}
-
-
-.swiper {
-  width: 100%;
-  max-width: 1575px; 
-  margin: auto;
-  padding: 20px 0;
-}
-
-.slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
   background-color: black;
-  border-radius: 40px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  height: 697px; /* Задаем одинаковую высоту для всех слайдов */
-}
-
-.build_slider {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;;
-  align-items: center;
-  width: 100%;
-
+  border-radius: 20px;
 }
 
 .proc .itemLabel {
@@ -181,7 +184,7 @@
   margin-bottom: 10px;
   height: 70px;
   max-width: 1084px;
- 
+
   border-bottom: 2px solid white;
   padding: 10px;
   transition: none;
@@ -195,15 +198,46 @@
 .proc .itemLabel:last-child {
   border-bottom: none;
 }
-.div_knopka{
+
+.div_knopka {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 404px;
+  margin: 0 auto;
+}
+
+.btnBuy {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-
 }
-.totalPrice{
+
+.buyButton_categories {
+  width: 181px;
+  height: 45px;
+  border: 2px solid rgba(192, 255, 1, 1);
+  color: rgba(192, 255, 1, 1);
+  font-size: 20px;
+  border-radius: 20px;
+  background-color: inherit;
+}
+
+.editButton {
+  margin: 9px 0 20px;
+  width: 181px;
+  height: 45px;
+  border: 2px solid rgba(121, 121, 121, 1);
+  color: rgba(121, 121, 121, 1);
+  font-size: 20px;
+  background-color: inherit;
+  border-radius: 20px;
+}
+
+.totalPrice {
   display: flex;
 }
-/* .div_opozone{
-  max-width: ;
-} */
+
+.priceCategoryItem {
+  height: 1010px;
+}
+

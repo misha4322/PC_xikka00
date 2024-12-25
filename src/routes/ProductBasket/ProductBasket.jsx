@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./ProductBasket.module.css";
 import trash from "../../assets/icons8-мусорка-100 1.svg";
 import fractal from "../../assets/Fractal-Design.png"
 import componentsData from "../../componets/componentsData";
+import { nanoid } from "@reduxjs/toolkit";
+import { IMaskInput } from 'react-imask';
 
 export const ProductBasket = () => {
   const [basketItems, setBasketItems] = useState({});
@@ -37,7 +39,7 @@ export const ProductBasket = () => {
       setOrderSuccess(true);
       setBasketItems({});
       setTotalPrice(0);
-      localStorage.removeItem("basket");
+      localStorage.removeItem("/Final");
     } else {
       alert("Пожалуйста, введите корректный номер телефона (10 цифр).");
     }
@@ -53,6 +55,10 @@ export const ProductBasket = () => {
     setOrderSuccess(false);
     navigate("/");
   };
+
+  const ref = useRef(null);
+  const inputRef = useRef(null);
+
 
   const isBasketEmpty = Object.keys(basketItems).length === 0;
 
@@ -92,38 +98,43 @@ export const ProductBasket = () => {
                 })}
               </ul>
             )}
-            <div>
+            <div className={s.tovar}>
               <img src={fractal} alt="" />
-              <h3 className={s.itogo}>{totalPrice} р</h3>
+              <h3 className={s.itogo}>Итог :{totalPrice} р</h3>
 
               <div className={s.inputContainer}>
-                <input
+ 
+                <IMaskInput
+                  className={s.inputTel}
+                  id="phone-mask"
                   type="tel"
                   inputMode="numeric"
                   placeholder="Введите номер телефона"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
-                  maxLength={11}
+                  maxLength={18}
                   pattern="[0-9]*"
-                  mask="+7 (___) ___-__-__"
+                  mask={'+{7} (000) 000-00-00'}
                   onKeyPress={(e) => {
                     if (!/[0-9]/.test(e.key)) {
                       e.preventDefault();
                     }
                   }}
                 />
-                <button
-                  onClick={handleOrder}
-                  className={s.orderButton}
-                  disabled={isBasketEmpty || phoneNumber.length !== 11}
-                >
-                  Заказать
-                </button>
+                <div className={s.btnDelY}>
+                  <button
+                    onClick={handleOrder}
+                    className={s.orderButton}
+                    disabled={isBasketEmpty || phoneNumber.length !== 11}
+                  >
+                    Заказать
+                  </button>
+                  <button onClick={handleClearBasket} className={s.clearButton}>
+                    <img src={trash} alt="Очистить корзину" />
+                  </button>
+                </div>
               </div>
 
-              <button onClick={handleClearBasket} className={s.clearButton}>
-                <img src={trash} alt="Очистить корзину" />
-              </button>
             </div>
 
           </div>
@@ -131,14 +142,20 @@ export const ProductBasket = () => {
         </>
       ) : (
         <div className={s.orderSuccess}>
-          <h2>Спасибо за ваш заказ!</h2>
-          <p>Ваш заказ успешно оформлен и передан на обработку.</p>
+          <div className={s.f}>
+            <h2>Спасибо за ваш заказ!</h2>
+            <p>Мы благодарим вас за покупку в нашем интернет-магазине! Ваш заказ успешно оформлен, и мы рады сообщить, что он уже в обработке.</p>
 
-          <p>Мы позвоним по этому номеру для потверждение заказа: {orderSuccessInfo.phoneNumber}</p>
-          <p>Сумма заказа: {orderSuccessInfo.totalPrice} рублей</p>
-          <button onClick={handleClose} className={s.closeButton}>
-            Закрыть
-          </button>
+            <p>Мы позвоним по этому номеру для потверждение заказа: {orderSuccessInfo.phoneNumber}</p>
+            <p>Номер вашего заказа: {nanoid(6)} <br />Сумма заказа: {orderSuccessInfo.totalPrice} рублей </p>
+
+            <p>Если у вас возникнут вопросы или потребуется помощь, не стесняйтесь обращаться в нашу службу поддержки:</p>
+            <p>Телефон: +7 (123) 456-78-90 <br /> Электронная почта: support@example.com</p>
+
+            <button onClick={handleClose} className={s.closeButton}>
+              Закрыть
+            </button>
+          </div>
         </div>
       )}
     </div>

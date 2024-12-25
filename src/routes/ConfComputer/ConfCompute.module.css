@@ -17,7 +17,7 @@
     align-items: stretch;
     border-radius: 35px;
     background-color: black;
-
+    
     flex-direction: column;
     padding: 20px;
     margin-bottom: 20px;
@@ -32,7 +32,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
     height: 70px;
-    
+   
    
     border-bottom: 2px solid white;
     padding: 10px;
@@ -96,19 +96,14 @@ input[type="radio"]:checked {
 }
 
 .basket {
-    background-color: transparent;
     width: 446px;
     height: 94px;
-    padding: 10px 20px;
-    border:  2px solid #C0FF01; 
+    color: rgba(192, 255, 1, 1);
+    border: 2px solid rgba(192, 255, 1, 1);
+    background-color: inherit;
     border-radius: 40px;
+    font-size: 40px;
     cursor: pointer;
-}
-
-.basket_p {
-    color: #C0FF01;
-    font-size: 18px;
-    font-weight: bold;
 }
 
 
@@ -118,7 +113,8 @@ input[type="radio"]:checked {
   }
 .div_konfi{
     display: flex;
-    align-items: center
+    align-items: center;
+    padding-bottom: 30px;
 }
 .price_itog{
     font-size: 36px;

@@ -1,10 +1,4 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import componentsData from "../../componets/componentsData";
 import s from "./Home.module.css";
 import { useDispatch } from "react-redux";
@@ -14,6 +8,18 @@ import cubeWhite from "../../assets/white_cube.png";
 import Deepcool from "../../assets/deepcool.png"
 import fractal from "../../assets/fraaaactol.png"
 import Lianli from "../../assets/lianli.png"
+
+import React, { useRef, useState } from 'react';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -164,7 +170,10 @@ export const Home = () => {
     <div className={s.componentsList}>
       {Object.entries(config).map(([key, value], index) => (
         <div key={index} className={s.componentItem}>
-          <span>{categoryLabels[key] || key}:</span> {value}
+          <div className={s.containerText}>
+            <span className={s.span}>{categoryLabels[key] || key}:{value}</span>
+            <div className={s.line}></div>
+          </div>
         </div>
       ))}
     </div>
@@ -176,21 +185,23 @@ export const Home = () => {
       const totalPrice = calculateTotalPrice(build.config);
       return (
         <div key={index} className={s.build}>
-        <div className={s.div_opozone}>
-         
-          <p className={s.valuable_h4}>{build.name}</p>
-          <img src={build.img_corpus} alt={build.name} className={s.buildImage} />
-          {renderComponents(build.config)}
-          
-          <div className={s.div_knopka}>
-            <button onClick={() => handleBuy(build.config)} className={s.buyButton_categories}>
-              Купить ПК
-            </button>
-            <button onClick={() => handleEdit(build.config)} className={s.editButton}>
-              Изменить
-            </button>
-            <div className={s.totalPrice}>Итоговая стоимость: {totalPrice} ₽</div>
-          </div>
+          <div className={s.div_opozone}>
+
+            <p className={s.valuable_h4}>{build.name}</p>
+            <img src={build.img_corpus} alt={build.name} className={s.buildImage} />
+            {renderComponents(build.config)}
+
+            <div className={s.div_knopka}>
+              <div className={s.btnBuy}>
+                <button onClick={() => handleBuy(build.config)} className={s.buyButton_categories}>
+                  Купить
+                </button>
+                <button onClick={() => handleEdit(build.config)} className={s.editButton}>
+                  Изменить
+                </button>
+              </div>
+              <div className={s.totalPrice}>{totalPrice} ₽</div>
+            </div>
           </div>
 
 
@@ -202,27 +213,30 @@ export const Home = () => {
     <div className={s.container}>
       <div className={s.sliderContainer}>
         <Swiper
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 4000 }}
-          modules={[Navigation, Pagination, Autoplay]}
-          className={s.swiper}
+          slidesPerView={1}
+          spaceBetween={30}
+          loop={true}
+          pagination={{
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="mySwiper"
         >
           {builds.map((build, index) => {
-
             return (
               <SwiperSlide key={index} className={s.slide}>
-                <div className={s.build_slider}>
-                  <div className={s.contaner_info}>
-                    <p className={s.name_swiper}>{build.name}</p>
-                    <p className={s.slogan_p}>{build.slogan}</p>
-
-
-                    <button onClick={() => handleBuy(build.config)} className={s.buyButton}>
-                      Купить ПК
-                    </button>
+                <div className={s.containerSlide}>
+                  <div className={s.textSlide}>
+                    <span>{build.name}</span>
+                    <h3>{build.slogan}</h3>
+                    <button className={s.btnSlide} onClick={() => handleBuy(build.config)}>Купить ПК</button>
                   </div>
-                  <img src={build.img_corpus} alt={build.name} className={s.buildImage} />
+                  <img className={s.imgSlide} src={build.img_corpus} alt={build.name} />
                 </div>
               </SwiperSlide>
             );
@@ -244,6 +258,7 @@ export const Home = () => {
           <div className={s.priceCategoryItem}>
 
             {renderBuildsByPrice(buildsByPrice.over300k)}
+
           </div>
         </div>
       </div>
