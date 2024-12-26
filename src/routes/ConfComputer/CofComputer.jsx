@@ -68,17 +68,17 @@ export const ConfComputer = () => {
   // Функция для проверки конфигурации перед добавлением в корзину
   const handleAddToBasket = () => {
     if (isConfigurationComplete()) {
-      // Сохранение выбранных комплектующих в корзину
+      
       const basketItems = JSON.parse(localStorage.getItem("basket")) || {};
       Object.entries(selectedComponents).forEach(([key, value]) => {
         basketItems[key] = value;
       });
       localStorage.setItem("basket", JSON.stringify(basketItems));
 
-      // Переход на страницу корзины
+     
       navigate("/basket");
     } else {
-      // Если не все компоненты выбраны, показываем alert
+      
       alert("Пожалуйста, выберите все комплектующие для завершения сборки!");
     }
   };
@@ -93,7 +93,7 @@ export const ConfComputer = () => {
   return (
     <div className={s.conf_div}>
       {Object.entries(componentsData).map(([category, items]) => {
-        // Фильтрация материнских плат по сокету процессора
+        
         const filteredItems =
           category === "motherboard"
             ? filterMotherboards(items, selectedComponents.processor)

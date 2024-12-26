@@ -216,11 +216,9 @@ export const Home = () => {
           slidesPerView={1}
           spaceBetween={30}
           loop={true}
-          pagination={{
-            clickable: true,
-          }}
+     
           autoplay={{
-            delay: 2500000,
+            delay: 2500,
             disableOnInteraction: false,
           }}
           navigation={true}
