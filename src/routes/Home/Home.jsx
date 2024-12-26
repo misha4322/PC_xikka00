@@ -220,7 +220,7 @@ export const Home = () => {
             clickable: true,
           }}
           autoplay={{
-            delay: 2500,
+            delay: 2500000,
             disableOnInteraction: false,
           }}
           navigation={true}
@@ -233,7 +233,7 @@ export const Home = () => {
                 <div className={s.containerSlide}>
                   <div className={s.textSlide}>
                     <span>{build.name}</span>
-                    <h3>{build.slogan}</h3>
+                    <h3 className={s.slogab}>{build.slogan}</h3>
                     <button className={s.btnSlide} onClick={() => handleBuy(build.config)}>Купить ПК</button>
                   </div>
                   <img className={s.imgSlide} src={build.img_corpus} alt={build.name} />

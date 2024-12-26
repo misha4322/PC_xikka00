@@ -158,3 +158,22 @@ input[type="radio"]:checked {
     margin-bottom: 20px;
     text-align: center;
   }
+
+  @media only screen and (max-width: 1265px) {
+ .itemText{
+    font-size: 25PX;
+ }
+ .price_konf{
+    font-size: 25PX;
+ }
+ .price_itog{
+    font-size: 25px;
+ }
+
+ .basket{
+    max-width: 200px;
+    font-size: 25px;
+    border-radius: 30px;
+ }
+
+  }

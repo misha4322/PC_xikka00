@@ -6,7 +6,7 @@ import s from "./ConfCompute.module.css";
 import proc from "../../assets/proc.svg";
 import vidokarta from "../../assets/Videokarta.svg";
 import OZY from "../../assets/OZY.svg";
-import matplata from "../../assets/matplata.svg";
+import matplata from "../../assets/Matplata.svg";
 import tower from "../../assets/tower.svg";
 import BP from "../../assets/BP.svg";
 import hard from "../../assets/harddisk 1.svg";
